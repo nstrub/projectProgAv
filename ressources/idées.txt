@@ -1,0 +1,6 @@
+- Portes / boutons
+- Pièges / boutons
+- Trous dans la map
+(- Téléporteurs)
+- Blocs déplaçables
+- Vérif chemin existe pour gagner
