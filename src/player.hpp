@@ -13,7 +13,8 @@ class Player{
     private:
         sf::Texture texture;
         sf::Sprite sprite;
-        int posY, posX;
+        int posY;
+        int posX;
 
     public:
         /**
@@ -28,6 +29,8 @@ class Player{
          * @param coordY Coordinate Y 
          */
         Player(int coordX, int coordY){
+            posX = coordX;
+            posY = coordY;
             sprite.setPosition(coordX,coordY);
             texture.loadFromFile("ressources/perso.png");
         }
@@ -64,18 +67,32 @@ class Player{
          * @brief Move the player on the x axis
          * 
          */
-        void moveX(int mX){
-            printf("PosX avant : %d",this->getX());
-            sprite.setPosition(mX + posX,posY);
-            printf("PosX après : %d",this->getX());
+        void moveLeft(){
+            posX += -MOVEMENT;
+            sprite.setPosition(posX, posY);
+            printf("posX, %d, getX %d\n",posX,getX());
         }
+
+        void moveRight(){
+            posX += MOVEMENT;
+            sprite.setPosition(posX, posY);
+            printf("posX, %d, getX %d\n",posX,getX());
+        }
+
         /**
          * @brief Move the player on the x axis
          * 
          */
-        void moveY(int mY){
-            sprite.setPosition(posX,mY + posY);
+        void moveDown(){
+            posY = posY + MOVEMENT;
+            sprite.setPosition(posX, posY);
         }
+
+        void moveUp(){
+            posY = posY - MOVEMENT;
+            sprite.setPosition(posX, posY);
+        }
+
 
         /**
          * @brief Show texture of the Player on screen
@@ -103,16 +120,16 @@ class Player{
                     app.close();
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
-                    moveX(1);
+                    moveRight();
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
-                    moveX(-10);
+                    moveLeft();
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
-                    moveY(10);
+                    moveUp();
 
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                    moveY(-10);
+                    moveDown();
             }
         }
 };

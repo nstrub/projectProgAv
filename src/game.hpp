@@ -21,7 +21,7 @@ class Game{
          * 
          */
         Game(){
-            player = Player(50,50);
+            player = Player(0,0);
         }
         /**
          * @brief Handle player moves in the game
