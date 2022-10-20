@@ -15,6 +15,10 @@ class Player{
         sf::Sprite sprite;
         int posY;
         int posX;
+        int posTabX;
+        int posTabY;
+        int direction;
+        bool canGo;
 
     public:
         /**
@@ -28,11 +32,30 @@ class Player{
          * @param coordX Coordinate X
          * @param coordY Coordinate Y 
          */
-        Player(int coordX, int coordY){
+        Player(int coordX, int coordY, int postabX, int postabY){
+            canGo = false;
             posX = coordX;
             posY = coordY;
+            posTabX = postabX;
+            posTabY = postabY;
             sprite.setPosition(coordX,coordY);
             texture.loadFromFile("ressources/perso.png");
+        }
+
+        /**
+         * @brief Get the x position in the tab
+         * 
+         */
+        int getposTabX(){
+            return posTabX;
+        }
+
+        /**
+         * @brief Get the y position in the tab
+         * 
+         */
+        int getposTabY(){
+            return posTabY;
         }
 
 
@@ -70,13 +93,11 @@ class Player{
         void moveLeft(){
             posX += -MOVEMENT;
             sprite.setPosition(posX, posY);
-            printf("posX, %d, getX %d\n",posX,getX());
         }
 
         void moveRight(){
             posX += MOVEMENT;
             sprite.setPosition(posX, posY);
-            printf("posX, %d, getX %d\n",posX,getX());
         }
 
         /**
@@ -105,6 +126,34 @@ class Player{
         }
 
         /**
+         * @brief Change direction :
+         * - 1 --> Left
+         * - 2 --> Right
+         * - 3 --> Up
+         * - 4 --> Down
+        */
+        void changeDirection(int dir){
+            direction = dir;
+        }
+
+        /**
+         * @brief autorize the player to move or not
+         * 
+         */
+        void changeGo(bool go){
+            canGo = go;
+        }
+
+        /**
+         * @brief Send to the world where the player is gonna move
+         * 
+         */
+        int getdirection(){
+            return direction;
+        }
+
+        //ATTENTION : BUG LORSQUE S ET D ou autre appuyés en même temps
+        /**
          * @brief Handle the moves of the player
          * 
          * @param app
@@ -119,16 +168,23 @@ class Player{
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     app.close();
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+                
                     moveRight();
+                }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+                
                     moveLeft();
+                }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z))
+                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                
                     moveUp();
-
+                }
+                    
                 if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                
                     moveDown();
             }
         }

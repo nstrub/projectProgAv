@@ -6,6 +6,8 @@
 #include <SFML/Graphics.hpp>
 #include <fstream>
 
+#include "bloc.hpp"
+
 /**
  * @brief Class that create and store a map
  * 
@@ -16,8 +18,26 @@ class Map{
         int nbColonne;
         char* nom;
         char** map;
+        Bloc** tab;
 
     public:
+        Map(){
+            nbLigne = 5;
+            nbColonne = 5;
+            map = (char**) malloc(nbLigne * nbColonne * sizeof(char));
+            //Ici je voulais commencer la structure pour les réactions bloc/joueur mais segmentation fault...
+            // tab = (Bloc**) malloc(nbLigne * nbColonne * sizeof(Bloc));
+            // int x = 100;
+            // int y = 100;
+            // for(int i = 0; i < nbLigne; i++){
+            //     for(int j = 0; j < nbColonne; j++){
+            //         tab[i][j] = Bloc(x,y);
+            //         x += 50;
+            //     }
+            //     x = 100;
+            //     y += 50;
+            // }
+        }
         /**
          * @brief Construct new map Object
          * 
@@ -97,6 +117,30 @@ class Map{
                         }
                     }
                 }
+            }
+        }
+
+        /**
+         * @brief Show texture of the labyrinth on screen
+         * 
+         * @param app 
+         */
+        void draw(sf::RenderWindow &app) {
+            int x = 100;
+            int y = 100;
+            for(int i = 0; i < nbColonne; i++){
+                for(int j = 0; j < nbLigne; j++){
+                    //Ajouter un if si le bloc est spécial ou non
+                    sf::RectangleShape carre(sf::Vector2f(50,50));
+                    carre.setPosition(x,y);
+                    carre.setFillColor(sf::Color::Yellow);
+                    carre.setOutlineColor(sf::Color::Black);
+                    carre.setOutlineThickness(2);
+                    app.draw(carre);
+                    x += 50;
+                }
+                x = 100;
+                y += 50;            
             }
         }
 };
