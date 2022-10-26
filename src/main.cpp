@@ -8,7 +8,7 @@ int main() {
     sf::RenderWindow app(sf::VideoMode(WINDOW_X, WINDOW_Y), "Tesoro");
     app.setFramerateLimit(60);
 
-    Game game = Game();
+    Game game = Game(5);
 
     while (app.isOpen()) {
         game.handleMoves(app);
