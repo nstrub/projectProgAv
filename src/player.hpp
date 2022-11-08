@@ -4,6 +4,10 @@
 #include <cstdlib>
 #include <iostream>
 #include <SFML/Graphics.hpp>
+#include <stdlib.h>
+#include <stdio.h>
+#include <time.h>
+#include <unistd.h>
 
 /**
  * @brief Class that manage what is related to the player
@@ -15,6 +19,8 @@ class Player{
         sf::Sprite sprite;
         int posY;
         int posX;
+        int larg;
+        int haut;
         int posTabX;
         int posTabY;
         int direction;
@@ -33,6 +39,8 @@ class Player{
          * @param coordY Coordinate Y 
          */
         Player(int coordX, int coordY, int postabX, int postabY){
+            haut = 50;
+            larg = 50;
             canGo = false;
             posX = coordX;
             posY = coordY;
@@ -86,18 +94,44 @@ class Player{
             return sprite;
         }
 
+        // A EFFACER MTN ON GERE COLLISION PAR LES SPRITES
+        bool isOut(int maxX,int maxY){
+            if (posX > maxX | posX < 0 | posY > maxY | posY < 0){
+                return true;
+            }
+            return false;
+        }
+
+        // ////Quand il sort, c'est dans les mooves à gérer
+        // ////FCT COLLISION QQU PART ET DANS
         /**
          * @brief Move the player on the x axis
          * 
          */
         void moveLeft(){
-            posX += -MOVEMENT;
-            sprite.setPosition(posX, posY);
+            int ancienX = posX;
+            int ancianY = posY;
+            if(!isOut(500,500)){
+                posX += -MOVEMENT;
+                sprite.setPosition(posX, posY);
+            }
+            else{
+                posX = ancienX;
+                posY = ancianY;
+            }
         }
 
         void moveRight(){
-            posX += MOVEMENT;
-            sprite.setPosition(posX, posY);
+            int ancienX = posX;
+            int ancianY = posY;
+            if(!isOut(500,500)){
+                posX += MOVEMENT;
+                sprite.setPosition(posX, posY);
+            }
+            else{
+                posX = ancienX;
+                posY = ancianY;
+            }
         }
 
         /**
@@ -105,13 +139,29 @@ class Player{
          * 
          */
         void moveDown(){
-            posY = posY + MOVEMENT;
-            sprite.setPosition(posX, posY);
+            int ancienX = posX;
+            int ancianY = posY;
+            if(!isOut(500,500)){
+                posY = posY + MOVEMENT;
+                sprite.setPosition(posX, posY);
+            }
+            else{
+                posX = ancienX;
+                posY = ancianY;
+            }
         }
 
         void moveUp(){
-            posY = posY - MOVEMENT;
-            sprite.setPosition(posX, posY);
+            int ancienX = posX;
+            int ancianY = posY;
+            if(!isOut(500,500)){
+                posY = posY - MOVEMENT;
+                sprite.setPosition(posX, posY);
+            }
+            else{
+                posX = ancienX;
+                posY = ancianY;
+            }
         }
 
 
@@ -165,26 +215,23 @@ class Player{
                 if (event.type == sf::Event::Closed)
                     app.close();
                 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     app.close();
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-                
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
+                    
                     moveRight();
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
-                
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
                     moveLeft();
                 }
 
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
-                
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
                     moveUp();
                 }
                     
-                if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
-                
+                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
                     moveDown();
             }
         }

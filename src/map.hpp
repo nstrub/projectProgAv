@@ -18,25 +18,12 @@ class Map{
         int nbColonne;
         char* nom;
         char** map;
-        Bloc** tab;
 
     public:
         Map(){
             nbLigne = 5;
             nbColonne = 5;
             map = (char**) malloc(nbLigne * nbColonne * sizeof(char));
-            //Ici je voulais commencer la structure pour les réactions bloc/joueur mais segmentation fault...
-            // tab = (Bloc**) malloc(nbLigne * nbColonne * sizeof(Bloc));
-            // int x = 100;
-            // int y = 100;
-            // for(int i = 0; i < nbLigne; i++){
-            //     for(int j = 0; j < nbColonne; j++){
-            //         tab[i][j] = Bloc(x,y);
-            //         x += 50;
-            //     }
-            //     x = 100;
-            //     y += 50;
-            // }
         }
         /**
          * @brief Construct new map Object
