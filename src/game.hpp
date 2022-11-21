@@ -16,7 +16,7 @@ class Game{
     private:
         Player player;
         Map map;
-        int **tab;
+        char *tab;
         int sizeTab;
         Bloc *blocs;
         int nbBlocs;
@@ -27,13 +27,12 @@ class Game{
          * 
          */
         Game(int size){
-            sizeTab = size;
-            nbBlocs = size;
-            map = Map();
-            tab[sizeTab][sizeTab];    //Récup les données de maps
+            map = Map("ressources/niveau1.map");
+            player = Player(map.getDX(),map.getDY(),0,0);
+            sizeTab = nbBlocs = map.size();
+            tab = map.getMap();    //Récup les données de maps
             //Placer player au coordonnée de son départ (0,0 par défaut)
             filetoBlocs();
-            player = Player(0,0,0,0, getBloc(0));
         }
 
         Bloc getBloc(int n){
@@ -45,14 +44,24 @@ class Game{
          * 
          */
         void filetoBlocs(){
-            nbBlocs = 25;
             blocs = new Bloc[nbBlocs];
             int h = 0;
             int w = 0;
             int n = 0;
-            for(int i = 0; i < 5; i++){     //Nb collonne + Collone
-                for(int j = 0; j < 5; j++){
-                    blocs[n] = Bloc(50*(w), 50*(h));
+            printf("%c\n",map);
+            for(int i = 0; i < map.getNbLigne(); i++){     //Nb colonne + Colonne
+                for(int j = 0; j < map.getNbColonne(); j++){
+                    switch(tab[n]) {
+                        case '0':
+                            blocs[n] = Bloc(50*(w), 50*(h), false);
+                            break;
+                        case '#':
+                            blocs[n] = Bloc(50*(w), 50*(h), true );
+                            break;
+                        default:
+                            w--;
+                            break;
+                    }
                     n++;
                     w++;
                 }
@@ -79,31 +88,22 @@ class Game{
          * @param app
          */
         void handleMoves(sf::RenderWindow &app){
-            setBlocforPlayer();
-            player.handleMoves(app);     
+            // if (player.getdirection() == 1){
+            //     if(player.getposTabX() + 1 < sizeTab){  //Aussi ajouter les murs etc...
+            //         player.changeGo(true);
+            //     }
+            // }
+            player.handleMoves(app);
         }
 
         /**
-         * @brief Return true if there's a collision between 2 sprites
+         * @brief Return true if collision between 2 sprites
          * 
          * @param sprite1
          * @param sprite2
          */
         bool collision(sf::Sprite sprite1, sf::Sprite sprite2) {
             return sprite1.getGlobalBounds().intersects(sprite2.getGlobalBounds());
-        }
-
-        void setBlocforPlayer(){
-            for(int i = 0; i < nbBlocs; i++){
-                if(collision(blocs[i].getSprite(), player.getSprite())){
-                    printf("collision\n");
-                    player.setBloc(blocs[i]);
-                    return;
-                }
-            }
-            printf("pas sur un bloc\n");
-            player.replacePlayer();
-            player.changeGo(false);
         }
         
         /**
