@@ -18,14 +18,15 @@ class Map{
     private:
         int nbLigne;
         int nbColonne;
+        int xD, yD;
         string nom;
-        char** map;
+        char* map;
 
     public:
         Map(){
             nbLigne = 5;
             nbColonne = 5;
-            map = (char**) malloc(nbLigne * nbColonne * sizeof(char));
+            map = (char*) malloc(nbLigne * nbColonne * sizeof(char));
         }
 
         /**
@@ -35,19 +36,16 @@ class Map{
         Map(char* nomMap){
             nom = nomMap;
             setNbLigneEtColonne();
-            printf("1");
-            map = (char**) malloc(nbLigne * nbColonne * sizeof(char));
-            printf("Après");
+            map = (char*) malloc(nbLigne * nbColonne * sizeof(char));
             lireFichier();
         }
 
         void setNbLigneEtColonne(){
             ifstream fichier(nom);
-            nbLigne = 0;
+            nbLigne = 1;
             nbColonne = 0;
             if (fichier) {
-                printf("Found\n");
-                nbLigne = 1;
+                printf("Fichier trouvé.\n");
                 fichier.seekg(0, std::ios::end);
                 int nbCarac = fichier.tellg();
                 char c;
@@ -58,16 +56,14 @@ class Map{
                     fichier.get(c);
                     if (c == 10) nbLigne++;
                 }
-                printf("%d\n", nbLigne);
 
                 // Nombre de colonnes
                 for (int i = 0; i < nbCarac; i++){
                     fichier.seekg(i,std::ios::beg);
                     fichier.get(c);
-                    if (c == 10) break;
+                    if (c == 10 || c == '\n') break;
                     else nbColonne++;
                 }
-                printf("%d\n", nbColonne);
 
                 fichier.close();
             }
@@ -78,33 +74,41 @@ class Map{
                 exit(0);
             }
 
-            printf("Après");
-
             if (nbLigne > 15 || nbLigne == 0) {
-                printf("Taille de la map (lignes) trop grande ou inexistante");
+                printf("Taille de la map (lignes) trop grande ou inexistante\n");
                 exit(0);
             }
 
             if (nbColonne > 15 || nbColonne == 0) {
-                printf("Taille de la map (colonnes) trop grande ou inexistante");
+                printf("Taille de la map (colonnes) trop grande ou inexistante\n");
                 exit(0);
             }
+
+            printf("Format de fichier correct.\n");
         }
 
-        int* getD(){
-            int* coos = (int*) malloc(sizeof (int) * 2);
-            coos[0] = 0;
-            coos[1] = 0;
+        int getDX(){
+            return xD * 50;
+        }
 
-            for (int i = 0; i < nbLigne; i++)
-                for (int j = 0; j < nbColonne; j++)
-                    if (map[i][j] == 'D'){
-                        coos[0] = i;
-                        coos[1] = j;
-                        return coos;
-                    }
+        int getDY(){
+            return yD * 50;
+        }
 
-            return coos;
+        int size() {
+            return nbLigne * nbColonne;
+        }
+
+        char* getMap() {
+            return map;
+        }
+
+        int getNbLigne() {
+            return nbLigne;
+        }
+
+        int getNbColonne() {
+            return nbColonne;
         }
 
         /**
@@ -113,22 +117,47 @@ class Map{
          */
         void lireFichier(){
             char c;
+            int index = 0;
             ifstream fichier(nom);
+
             if (fichier) {
-                fichier.seekg(0, std::ios::beg);
-                for (int i = 0; i < nbLigne; i++) {
-                    for (int j = 0; j < nbColonne; j++) {
-                        char c = fichier.peek();
-                        switch(c) {
-                            case ' ':
-                                map[i][j] = '0';
-                                break;
-                            default:
-                                map[i][j] = c;
-                        }
+                // allocate memory:
+                char * buffer = new char [nbLigne * nbColonne + nbLigne - 1];
+
+                // read data as a block:
+                fichier.read (buffer,nbLigne*nbColonne + nbLigne - 1);
+
+                int nbNouvLigne = 0;
+                printf("buffer : \n");
+
+                for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
+                    printf("%c ",buffer[i]);
+                    if (buffer[i] == '\n') i++;
+                    if (i > nbLigne * nbColonne) break;
+                    switch(buffer[i]) {
+                        case '0':
+                            map[i] = '0';
+                            break;
+                        case ' ':
+                            map[i] = '0';
+                            break;
+                        case 'D':
+                            map[i] = '0';
+                            yD = (i-nbNouvLigne) / nbColonne;
+                            xD = (i-nbNouvLigne) % nbColonne;
+                            break;
+                        case 'd':
+                            map[i] = '0';
+                            yD = (i-nbNouvLigne) / nbColonne;
+                            xD = (i-nbNouvLigne) % nbColonne;
+                            break;
+                        case '#':
+                            map[i] = '#';
+                            break;
                     }
                 }
             }
+            printf("fin\n");
         }
 
         /**

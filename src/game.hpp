@@ -16,7 +16,7 @@ class Game{
     private:
         Player player;
         Map map;
-        int **tab;
+        char *tab;
         int sizeTab;
         Bloc *blocs;
         int nbBlocs;
@@ -27,13 +27,14 @@ class Game{
          * 
          */
         Game(int size){
-            sizeTab = size;
-            nbBlocs = size;
-            map = Map();
-            tab[sizeTab][sizeTab];    //Récup les données de maps
-            //Placer player au coordonnée de son départ (0,0 par défaut)
+            map = Map("ressources/niveau1.map");
+            sizeTab = nbBlocs = map.size();
+            tab = map.getMap();    //Récup les données de maps
             filetoBlocs();
-            player = Player(0,0,0,0, getBloc(0));
+
+            //Placer player au coordonnée de son départ (0,0 par défaut)
+            Bloc blocDebut = blocs[map.getNbColonne() * map.getDY() + map.getDX()];
+            player = Player(map.getDX(),map.getDY(),0,0, blocDebut);
         }
 
         Bloc getBloc(int n){
@@ -41,20 +42,27 @@ class Game{
         }
 
         /**
-         * @brief Transform the file to map of blocs
+         * @brief Transform the file from map to blocs
          * 
          */
         void filetoBlocs(){
-            nbBlocs = 25;
             blocs = new Bloc[nbBlocs];
             int h = 0;
             int w = 0;
             int n = 0;
-            for(int i = 0; i < 5; i++){     //Nb collonne + Collone
-                for(int j = 0; j < 5; j++){
-                    blocs[n] = Bloc(50*(w), 50*(h));
+            for(int i = 0; i < map.getNbLigne(); i++){     //Nb colonne + Colonne
+                for(int j = 0; j < map.getNbColonne(); j++){
+                    switch(tab[n]) {
+                        case '0':
+                            blocs[n] = Bloc(50*(w), 50*(h), false);
+                            break;
+                        case '#':
+                            blocs[n] = Bloc(50*(w), 50*(h), true );
+                            break;
+                    }
                     n++;
-                    w++;
+                    if (tab[n] == '#' || tab[n] == '0') w++;
+                    else n++;
                 }
                 w = 0;
                 h++;
@@ -96,7 +104,7 @@ class Game{
         void setBlocforPlayer(){
             for(int i = 0; i < nbBlocs; i++){
                 if(collision(blocs[i].getSprite(), player.getSprite())){
-                    printf("collision\n");
+                    // printf("collision\n");
                     player.setBloc(blocs[i]);
                     return;
                 }
