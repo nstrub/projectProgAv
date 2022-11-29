@@ -30,17 +30,18 @@ class Bloc{
             texture.loadFromFile("ressources/sol.png");
             sprite.setPosition(0,0);
         }
-        Bloc(int x, int y){
+        Bloc(int x, int y, bool isWall){
             haut = 50;
             larg = 50;
-            texture.loadFromFile("ressources/sol.png");
+            if (isWall) texture.loadFromFile("ressources/mur.png");
+            else texture.loadFromFile("ressources/sol.png");
             sprite.setPosition(x, y);
             
             isTrapped = false;
             isDoor = false;
             isButton = false;
             isExit = false;
-            isFree = true;
+            isFree = !isWall;
         }
 
         /**

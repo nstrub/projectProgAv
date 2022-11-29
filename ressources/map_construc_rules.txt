@@ -4,6 +4,6 @@ Les règles de construction sont les suivantes :
     - 0 signale un espace vide, une case sur laquelle le joueur peut se déplacer;
     - Les espaces vides (espaces) sont considérés comme des 0;
     - # signale un mur, qui ne peut pas être traversé;
-    - D signale l'endroit d'apparation du joueur, il est obligatoire;
-    - F signale la fin du labyrinthe, elle est obligatoire;
-    - La taille du labyrinthe est rectangulaire;
+    - D ou d signale l'endroit d'apparation du joueur, par défaut en 0,0; 
+    - F ou f signale la fin du labyrinthe, elle est obligatoire;
+    - La forme du labyrinthe est rectangulaire;
