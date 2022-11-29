@@ -131,9 +131,13 @@ class Map{
                 printf("buffer : \n");
 
                 for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
+                    if (buffer[i] == '\n')
+                    {
+                        printf("%c", buffer[i]);
+                        i++;
+                    }
+                    if (i > nbLigne*nbColonne + nbLigne - 1) break;
                     printf("%c ",buffer[i]);
-                    if (buffer[i] == '\n') i++;
-                    if (i > nbLigne * nbColonne) break;
                     switch(buffer[i]) {
                         case '0':
                             map[i] = '0';
@@ -157,7 +161,6 @@ class Map{
                     }
                 }
             }
-            printf("fin\n");
         }
 
         /**

@@ -29,7 +29,7 @@ class Game{
         Game(int size){
             map = Map("ressources/niveau1.map");
             sizeTab = nbBlocs = map.size();
-            tab = map.getMap();    //Récup les données de maps
+            tab = map.getMap();    //Récup les données de map
             filetoBlocs();
 
             //Placer player au coordonnée de son départ (0,0 par défaut)
