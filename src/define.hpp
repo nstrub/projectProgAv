@@ -5,6 +5,6 @@
 #define WINDOW_Y 768
 #define BOXSIZE 10
 
-#define MOVEMENT 25
+#define MOVEMENT 50
 
 #endif

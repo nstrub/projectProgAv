@@ -8,6 +8,7 @@
 #include <stdio.h>
 #include <time.h>
 #include <unistd.h>
+#include "bloc.hpp"
 
 /**
  * @brief Class that manage what is related to the player
@@ -23,8 +24,9 @@ class Player{
         int haut;
         int posTabX;
         int posTabY;
-        int direction;
         bool canGo;
+        Bloc blocOn;
+
 
     public:
         /**
@@ -38,16 +40,17 @@ class Player{
          * @param coordX Coordinate X
          * @param coordY Coordinate Y 
          */
-        Player(int coordX, int coordY, int postabX, int postabY){
+        Player(int coordX, int coordY, int postabX, int postabY, Bloc blocGived){
             haut = 50;
             larg = 50;
-            canGo = false;
+            canGo = true;
             posX = coordX;
             posY = coordY;
             posTabX = postabX;
             posTabY = postabY;
             sprite.setPosition(coordX,coordY);
             texture.loadFromFile("ressources/perso.png");
+            setBloc(blocGived);
         }
 
         /**
@@ -94,43 +97,54 @@ class Player{
             return sprite;
         }
 
-        // A EFFACER MTN ON GERE COLLISION PAR LES SPRITES
-        bool isOut(int maxX,int maxY){
-            if (posX > maxX | posX < 0 | posY > maxY | posY < 0){
-                return true;
-            }
-            return false;
+
+        /**
+         * @brief Set the Go object
+         * 
+         * @param newGo 
+         */
+        void setGo(bool newGo){
+            canGo = newGo;
         }
 
-        // ////Quand il sort, c'est dans les mooves à gérer
-        // ////FCT COLLISION QQU PART ET DANS
+        void setBloc(Bloc newBloc){
+            blocOn = newBloc;
+        }
+
+
         /**
          * @brief Move the player on the x axis
          * 
          */
         void moveLeft(){
+//            infoPlayerMove();
             int ancienX = posX;
-            int ancianY = posY;
-            if(!isOut(500,500)){
+            int ancienY = posY;
+            if(canGo){
                 posX += -MOVEMENT;
                 sprite.setPosition(posX, posY);
             }
             else{
                 posX = ancienX;
-                posY = ancianY;
+                posY = ancienY;
+                sprite.setPosition(posX, posY);
+                changeGo(true);
             }
         }
 
         void moveRight(){
+//            infoPlayerMove();
             int ancienX = posX;
-            int ancianY = posY;
-            if(!isOut(500,500)){
+            int ancienY = posY;
+            if(canGo){
                 posX += MOVEMENT;
                 sprite.setPosition(posX, posY);
             }
             else{
                 posX = ancienX;
-                posY = ancianY;
+                posY = ancienY;
+                sprite.setPosition(posX, posY);
+                changeGo(true);
             }
         }
 
@@ -139,28 +153,32 @@ class Player{
          * 
          */
         void moveDown(){
+//            infoPlayerMove();
             int ancienX = posX;
-            int ancianY = posY;
-            if(!isOut(500,500)){
+            int ancienY = posY;
+            if(canGo){
                 posY = posY + MOVEMENT;
                 sprite.setPosition(posX, posY);
             }
             else{
                 posX = ancienX;
-                posY = ancianY;
+                posY = ancienY;
+                changeGo(true);
             }
         }
 
         void moveUp(){
+//            infoPlayerMove();
             int ancienX = posX;
-            int ancianY = posY;
-            if(!isOut(500,500)){
+            int ancienY = posY;
+            if(canGo){
                 posY = posY - MOVEMENT;
                 sprite.setPosition(posX, posY);
             }
             else{
                 posX = ancienX;
-                posY = ancianY;
+                posY = ancienY;
+                changeGo(true);
             }
         }
 
@@ -176,17 +194,6 @@ class Player{
         }
 
         /**
-         * @brief Change direction :
-         * - 1 --> Left
-         * - 2 --> Right
-         * - 3 --> Up
-         * - 4 --> Down
-        */
-        void changeDirection(int dir){
-            direction = dir;
-        }
-
-        /**
          * @brief autorize the player to move or not
          * 
          */
@@ -195,12 +202,26 @@ class Player{
         }
 
         /**
-         * @brief Send to the world where the player is gonna move
+         * @brief Rool the player back to his previous position (if he exit the blocs for exemple)
          * 
          */
-        int getdirection(){
-            return direction;
+        void replacePlayer(){
+            int rollback_x = blocOn.getSprite().getPosition().x;
+            int rollback_y = blocOn.getSprite().getPosition().y;
+            posX = rollback_x;
+            posY = rollback_y;
+            sprite.setPosition(rollback_x,rollback_y);
         }
+
+        // void infoPlayerMove(){
+        //     if(blocOn.getisFree()){
+        //         canGo = true;
+        //     }
+        //     else{
+        //         canGo = false;
+        //         printf("player met cango faux\n");
+        //     }
+        // }
 
         //ATTENTION : BUG LORSQUE S ET D ou autre appuyés en même temps
         /**
@@ -218,22 +239,23 @@ class Player{
                 else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                     app.close();
 
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
-                    
+                if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::D)){
                     moveRight();
                 }
 
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
+                if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Q)){
                     moveLeft();
                 }
 
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
+                 if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::Z)){
                     moveUp();
                 }
                     
-                else if (sf::Keyboard::isKeyPressed(sf::Keyboard::S))
+                 if (event.type == sf::Event::KeyPressed && sf::Keyboard::isKeyPressed(sf::Keyboard::S)){
                     moveDown();
+                }
             }
+            //printf("CanGo : %d %d %d\n",canGo, posX, posY);
         }
 };
 

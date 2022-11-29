@@ -29,6 +29,7 @@ class Bloc{
         Bloc(){
             texture.loadFromFile("ressources/sol.png");
             sprite.setPosition(0,0);
+            isFree = true;
         }
         Bloc(int x, int y){
             haut = 50;
@@ -68,6 +69,10 @@ class Bloc{
 
         sf::Sprite getSprite(){
             return sprite;
+        }
+
+        bool getisFree(){
+            return isFree;
         }
 
         void draw(sf::RenderWindow &app){
