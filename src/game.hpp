@@ -108,7 +108,7 @@ class Game{
             player.replacePlayer();
             player.changeGo(false);
         }
-        
+
         /**
          * @brief Show texture on screen
          * 
