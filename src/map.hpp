@@ -127,13 +127,11 @@ class Map{
                 // read data as a block:
                 fichier.read (buffer,nbLigne * nbColonne + nbLigne - 1);
 
-                // Permet de savoir le nombre de ligne que l'on a déjà examiné
-                int nbNouvLigne = 0;
-
                 // Indice pour la construction du nouveau tableau
                 int caseActuelle = 0;
 
                 for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
+                    printf("%c",buffer[i]);
                     switch(buffer[i]) {
                         case '#':
                             map[caseActuelle] = '#';
@@ -146,23 +144,23 @@ class Map{
                             break;
                         case 'D':
                             map[caseActuelle] = 'D';
-                            yD = (i-nbNouvLigne) / nbColonne;
-                            xD = (i-nbNouvLigne) % nbColonne;
+                            yD = caseActuelle / nbColonne;
+                            xD = caseActuelle % nbColonne;
                             break;
                         case 'd':
                             map[caseActuelle] = 'D';
-                            yD = (i-nbNouvLigne) / nbColonne;
-                            xD = (i-nbNouvLigne) % nbColonne;
+                            yD = caseActuelle / nbColonne;
+                            xD = caseActuelle % nbColonne;
                             break;
                         case 'F':
                             map[caseActuelle] = 'F';
-                            yF = (i-nbNouvLigne) / nbColonne;
-                            xF = (i-nbNouvLigne) % nbColonne;
+                            yF = caseActuelle / nbColonne;
+                            xF = caseActuelle % nbColonne;
                             break;
                         case 'f':
                             map[caseActuelle] = 'F';
-                            yF = (i-nbNouvLigne) / nbColonne;
-                            xF = (i-nbNouvLigne) % nbColonne;
+                            yF = caseActuelle / nbColonne;
+                            xF = caseActuelle % nbColonne;
                             break;
                     }
 

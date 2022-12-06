@@ -33,8 +33,9 @@ class Game{
             filetoBlocs();
 
             //Placer player au coordonnée de son départ (0,0 par défaut)
-            Bloc blocDebut = blocs[map.getNbColonne() * map.getDY() + map.getDX()];
-            player = Player(map.getDX(),map.getDY(),0,0, blocDebut);
+            printf("x:%i y:%i", map.getDX(), map.getDY());
+            Bloc blocDebut = blocs[map.getNbColonne() * (map.getDX()/50) + (map.getDY()/50)];
+            player = Player(map.getDX(),map.getDY(),map.getDX()/50,map.getDY()/50, blocDebut);
         }
 
         Bloc getBloc(int n){
@@ -50,14 +51,13 @@ class Game{
             int h = 0;
             int w = 0;
             int n = 0;
+            // printf("%i %i", map.getDX(), map.getDY());
             for(int i = 0; i < map.getNbLigne(); i++){   //Nb colonne + Colonne
                 for(int j = 0; j < map.getNbColonne(); j++){
                     if (tab[n] == '#') blocs[n] = Bloc(50*(w), 50*(h), true , tab[n]);
                     else blocs[n] = Bloc(50*(w), 50*(h), false, tab[n]);
-                    n++;
-                    // if (tab[n] == '#' || tab[n] == '0') w++;
                     w++;
-                    // else n++;
+                    n++;
                 }
                 w = 0;
                 h++;

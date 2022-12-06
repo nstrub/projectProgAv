@@ -39,9 +39,7 @@ class Bloc{
             std::string link = debut + lettre + fin;
 
             texture.loadFromFile(link);
-            // if (lettre == 'D') texture.loadFromFile("ressources/mur.png");
-            // else if (lettre == 'F') texture.loadFromFile("ressources/arrivee.png");
-            // else texture.loadFromFile("ressources/sol.png");
+
             sprite.setPosition(x, y);
             
             isTrapped = false;
