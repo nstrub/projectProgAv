@@ -18,7 +18,7 @@ class Map{
     private:
         int nbLigne;
         int nbColonne;
-        int xD, yD;
+        int xD, yD, xF, yF;
         string nom;
         char* map;
 
@@ -125,40 +125,51 @@ class Map{
                 char * buffer = new char [nbLigne * nbColonne + nbLigne - 1];
 
                 // read data as a block:
-                fichier.read (buffer,nbLigne*nbColonne + nbLigne - 1);
+                fichier.read (buffer,nbLigne * nbColonne + nbLigne - 1);
 
+                // Permet de savoir le nombre de ligne que l'on a déjà examiné
                 int nbNouvLigne = 0;
-                printf("buffer : \n");
+
+                // Indice pour la construction du nouveau tableau
+                int caseActuelle = 0;
 
                 for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
-                    if (buffer[i] == '\n')
-                    {
-                        printf("%c", buffer[i]);
-                        i++;
-                    }
-                    if (i > nbLigne*nbColonne + nbLigne - 1) break;
-                    printf("%c ",buffer[i]);
                     switch(buffer[i]) {
+                        case '#':
+                            map[caseActuelle] = '#';
+                            break;
                         case '0':
-                            map[i] = '0';
+                            map[caseActuelle] = '0';
                             break;
                         case ' ':
-                            map[i] = '0';
+                            map[caseActuelle] = '0';
                             break;
                         case 'D':
-                            map[i] = '0';
+                            map[caseActuelle] = 'D';
                             yD = (i-nbNouvLigne) / nbColonne;
                             xD = (i-nbNouvLigne) % nbColonne;
                             break;
                         case 'd':
-                            map[i] = '0';
+                            map[caseActuelle] = 'D';
                             yD = (i-nbNouvLigne) / nbColonne;
                             xD = (i-nbNouvLigne) % nbColonne;
                             break;
-                        case '#':
-                            map[i] = '#';
+                        case 'F':
+                            map[caseActuelle] = 'F';
+                            yF = (i-nbNouvLigne) / nbColonne;
+                            xF = (i-nbNouvLigne) % nbColonne;
+                            break;
+                        case 'f':
+                            map[caseActuelle] = 'F';
+                            yF = (i-nbNouvLigne) / nbColonne;
+                            xF = (i-nbNouvLigne) % nbColonne;
                             break;
                     }
+
+                    // Si le caratère que l'on a regardé est autre chose qu'un \n, on passe au caractère suivant.
+                    // Cela permet de ne pas mettre de \n dans le tableau et surtout de ne pas perdre l'indice sur lequel
+                    // on doit ajouter dans le tableau construit.
+                    if (buffer[i] != '\n') caseActuelle++;
                 }
             }
         }

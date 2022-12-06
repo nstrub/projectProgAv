@@ -50,19 +50,14 @@ class Game{
             int h = 0;
             int w = 0;
             int n = 0;
-            for(int i = 0; i < map.getNbLigne(); i++){     //Nb colonne + Colonne
+            for(int i = 0; i < map.getNbLigne(); i++){   //Nb colonne + Colonne
                 for(int j = 0; j < map.getNbColonne(); j++){
-                    switch(tab[n]) {
-                        case '0':
-                            blocs[n] = Bloc(50*(w), 50*(h), false);
-                            break;
-                        case '#':
-                            blocs[n] = Bloc(50*(w), 50*(h), true );
-                            break;
-                    }
+                    if (tab[n] == '#') blocs[n] = Bloc(50*(w), 50*(h), true , tab[n]);
+                    else blocs[n] = Bloc(50*(w), 50*(h), false, tab[n]);
                     n++;
-                    if (tab[n] == '#' || tab[n] == '0') w++;
-                    else n++;
+                    // if (tab[n] == '#' || tab[n] == '0') w++;
+                    w++;
+                    // else n++;
                 }
                 w = 0;
                 h++;

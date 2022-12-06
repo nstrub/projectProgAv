@@ -27,14 +27,21 @@ class Bloc{
          * 
          */
         Bloc(){
-            texture.loadFromFile("ressources/sol.png");
+            texture.loadFromFile("ressources/0.png");
             sprite.setPosition(0,0);
         }
-        Bloc(int x, int y, bool isWall){
+        Bloc(int x, int y, bool isWall, char lettre){
             haut = 50;
             larg = 50;
-            if (isWall) texture.loadFromFile("ressources/mur.png");
-            else texture.loadFromFile("ressources/sol.png");
+
+            std::string debut = "ressources/";
+            std::string fin = ".png";
+            std::string link = debut + lettre + fin;
+
+            texture.loadFromFile(link);
+            // if (lettre == 'D') texture.loadFromFile("ressources/mur.png");
+            // else if (lettre == 'F') texture.loadFromFile("ressources/arrivee.png");
+            // else texture.loadFromFile("ressources/sol.png");
             sprite.setPosition(x, y);
             
             isTrapped = false;
