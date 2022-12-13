@@ -121,7 +121,8 @@ class Player{
             int ancienX = posX;
             int ancienY = posY;
             if(canGo){
-                posX += -MOVEMENT;
+                posX -= MOVEMENT;
+                posTabX--;
                 sprite.setPosition(posX, posY);
             }
             else{
@@ -138,6 +139,7 @@ class Player{
             int ancienY = posY;
             if(canGo){
                 posX += MOVEMENT;
+                posTabX++;
                 sprite.setPosition(posX, posY);
             }
             else{
@@ -158,6 +160,7 @@ class Player{
             int ancienY = posY;
             if(canGo){
                 posY = posY + MOVEMENT;
+                posTabY++;
                 sprite.setPosition(posX, posY);
             }
             else{
@@ -173,6 +176,7 @@ class Player{
             int ancienY = posY;
             if(canGo){
                 posY = posY - MOVEMENT;
+                posTabY--;
                 sprite.setPosition(posX, posY);
             }
             else{

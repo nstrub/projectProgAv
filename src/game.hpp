@@ -152,14 +152,19 @@ class Game{
                                 if (blocs[j].getIsClosed()) {
                                     blocs[j].changeTexture('0');
                                     blocs[j].changeClosed();
+                                    printf("porte trouvée");
                                 }
-                                else blocs[j].changeTexture('#');
+                                else {
+                                    blocs[j].changeTexture('#');
+                                    blocs[j].changeClosed();
+                                }
                             }
                         }
                         printf("hasMove = false\n");
                         hasMove = false;
                     }
-                    else {
+
+                    if (blocs[player.getposTabY()*map.getNbColonne()+player.getposTabX()].getChar() != '@') {
                         hasMove = true;
                         printf("hasMove = true\n");
                     }
