@@ -20,6 +20,7 @@ class Game{
         int sizeTab;
         Bloc *blocs;
         int nbBlocs;
+        bool hasMove;
 
     public:
         /**
@@ -36,6 +37,7 @@ class Game{
             printf("x:%i y:%i", map.getDX(), map.getDY());
             Bloc blocDebut = blocs[map.getNbColonne() * (map.getDX()/50) + (map.getDY()/50)];
             player = Player(map.getDX(),map.getDY(),map.getDX()/50,map.getDY()/50, blocDebut);
+            hasMove = true;
         }
 
         Bloc getBloc(int n){
@@ -54,8 +56,7 @@ class Game{
             // printf("%i %i", map.getDX(), map.getDY());
             for(int i = 0; i < map.getNbLigne(); i++){   //Nb colonne + Colonne
                 for(int j = 0; j < map.getNbColonne(); j++){
-                    if (tab[n] == '#') blocs[n] = Bloc(50*(w), 50*(h), true , tab[n]);
-                    else blocs[n] = Bloc(50*(w), 50*(h), false, tab[n]);
+                    blocs[n] = Bloc(50*(w), 50*(h), tab[n]);
                     w++;
                     n++;
                 }
@@ -97,10 +98,76 @@ class Game{
         }
 
         void setBlocforPlayer(){
+            // printf("%i", player.getposTabY()*map.getNbColonne()+player.getposTabX());
+            // Bloc tmp = blocs[player.getposTabX()*map.getNbColonne()+player.getposTabY()];
+            // if(collision(tmp.getSprite(), player.getSprite())){
+            //     printf(" collision");
+            //     if (tmp.getIsWall() || tmp.getIsClosed()) {
+            //         printf(" Mur ou Porte fermée\n");
+            //         player.replacePlayer();
+            //         player.changeGo(false);
+            //         return;
+            //     }
+
+            //     printf(" Libre\n");
+                
+            //     player.setBloc(tmp);
+
+            //     if (tmp.getIsButton() && hasMove) {
+            //         for(int j = 0; j < nbBlocs; j++){
+            //             if (blocs[j].getChar() == '=') {
+            //                 if (blocs[j].getIsClosed()) blocs[j].changeTexture('0');
+            //                 else blocs[j].changeTexture('#');
+            //             }
+            //         }
+            //         printf("hasMove = false\n");
+            //         hasMove = false;
+            //     }
+            //     else {
+            //         hasMove = true;
+            //         // printf("hasMove = true\n");
+            //     }
+
+            //     if (tmp.getIsExit()) {
+            //         printf("Bravo !\nFin");
+            //         exit(0);
+            //     }
+            //     return;
+            // }
+            // else {
+            //     player.replacePlayer();
+            //     player.changeGo(false);
+            // }
+
             for(int i = 0; i < nbBlocs; i++){
-                if(collision(blocs[i].getSprite(), player.getSprite())){
+                // if (i == player.getposTabY()*map.getNbColonne()+player.getposTabX()) printf("sur la case : %i", i);
+                // else printf("%i ", player.getposTabY()*map.getNbColonne()+player.getposTabX());
+                if(collision(blocs[i].getSprite(), player.getSprite()) && !blocs[i].getIsWall() && !blocs[i].getIsClosed()){
                     // printf("collision\n");
                     player.setBloc(blocs[i]);
+
+                    if (blocs[i].getIsButton() && hasMove) {
+                        for(int j = 0; j < nbBlocs; j++){
+                            if (blocs[j].getChar() == '=') {
+                                if (blocs[j].getIsClosed()) {
+                                    blocs[j].changeTexture('0');
+                                    blocs[j].changeClosed();
+                                }
+                                else blocs[j].changeTexture('#');
+                            }
+                        }
+                        printf("hasMove = false\n");
+                        hasMove = false;
+                    }
+                    else {
+                        hasMove = true;
+                        printf("hasMove = true\n");
+                    }
+
+                    if (blocs[i].getIsExit()) {
+                        printf("Bravo !\nFin");
+                        exit(0);
+                    }
                     return;
                 }
             }

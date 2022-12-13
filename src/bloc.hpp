@@ -12,10 +12,12 @@
 class Bloc{
     private:
         bool isTrapped;
-        bool isDoor;
+        bool isClosed;
         bool isButton;
         bool isExit;
-        bool isFree;
+        // bool isFree;
+        bool isWall;
+        char letter;
         int haut;
         int larg;
         sf::Texture texture;
@@ -30,23 +32,29 @@ class Bloc{
             texture.loadFromFile("ressources/0.png");
             sprite.setPosition(0,0);
         }
-        Bloc(int x, int y, bool isWall, char lettre){
+        Bloc(int x, int y, char lettre){
             haut = 50;
             larg = 50;
+            letter = lettre;
+            isTrapped = false;
+            isClosed = false;
+            isButton = false;
+            isExit = false;
+            isWall = false;
+
+            switch (lettre) {
+                case '@': isButton = true; break;
+                case 'F': isExit = true; break;
+                case '#': isWall = true; break;
+                case '=': isClosed = true; lettre = '#';
+            }
 
             std::string debut = "ressources/";
             std::string fin = ".png";
             std::string link = debut + lettre + fin;
 
             texture.loadFromFile(link);
-
             sprite.setPosition(x, y);
-            
-            isTrapped = false;
-            isDoor = false;
-            isButton = false;
-            isExit = false;
-            isFree = !isWall;
         }
 
         /**
@@ -77,7 +85,38 @@ class Bloc{
         }
 
         bool getisFree(){
-            return isFree;
+            return !getIsWall();
+        }
+
+        bool getIsExit(){
+            return isExit;
+        }
+
+        bool getIsWall(){
+            return isWall;
+        }
+
+        bool getIsButton(){
+            return isButton;
+        }
+
+        bool getIsClosed(){
+            return isClosed;
+        }
+
+        char getChar(){
+            return letter;
+        }
+
+        void changeClosed() {
+            isClosed = !isClosed;
+        }
+
+        void changeTexture(char c) {
+            std::string debut = "ressources/";
+            std::string fin = ".png";
+            std::string link = debut + c + fin;
+            texture.loadFromFile(link);
         }
 
         void draw(sf::RenderWindow &app){

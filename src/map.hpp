@@ -132,18 +132,15 @@ class Map{
 
                 for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
                     printf("%c",buffer[i]);
+                    // Caractères par défaut
+                    map[caseActuelle] = buffer[i];
+
                     switch(buffer[i]) {
-                        case '#':
-                            map[caseActuelle] = '#';
-                            break;
-                        case '0':
-                            map[caseActuelle] = '0';
-                            break;
+                        // Caractères incorrects ou spéciaux
                         case ' ':
                             map[caseActuelle] = '0';
                             break;
                         case 'D':
-                            map[caseActuelle] = 'D';
                             yD = caseActuelle / nbColonne;
                             xD = caseActuelle % nbColonne;
                             break;
@@ -153,7 +150,6 @@ class Map{
                             xD = caseActuelle % nbColonne;
                             break;
                         case 'F':
-                            map[caseActuelle] = 'F';
                             yF = caseActuelle / nbColonne;
                             xF = caseActuelle % nbColonne;
                             break;

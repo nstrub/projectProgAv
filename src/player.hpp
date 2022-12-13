@@ -206,11 +206,8 @@ class Player{
          * 
          */
         void replacePlayer(){
-            int rollback_x = blocOn.getSprite().getPosition().x;
-            int rollback_y = blocOn.getSprite().getPosition().y;
-            posX = rollback_x;
-            posY = rollback_y;
-            sprite.setPosition(rollback_x,rollback_y);
+            sprite.setPosition(blocOn.getSprite().getPosition().x,
+                               blocOn.getSprite().getPosition().y);
         }
 
         // void infoPlayerMove(){

@@ -1,9 +1,11 @@
 Vous pouvez construire votre propre niveau dans le fichier nommé perso.map.
 
 Les règles de construction sont les suivantes :
-    - 0 signale un espace vide, une case sur laquelle le joueur peut se déplacer;
-    - Les espaces vides (espaces) sont considérés comme des 0;
+    -
+    - 0 ou ' ' (espace) signale un espace vide, une case sur laquelle le joueur peut se déplacer;
     - # signale un mur, qui ne peut pas être traversé;
     - D signale l'endroit d'apparation du joueur, il est obligatoire;
     - F signale la fin du labyrinthe, elle est obligatoire;
+    - @ signale un bouton qui permet d'ouvrir des portes;
+    - = signale une porte;
     - La taille du labyrinthe est rectangulaire;
