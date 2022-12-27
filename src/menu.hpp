@@ -7,6 +7,10 @@
 
 #include "define.hpp"
 
+/**
+ * @brief Class that manage the menu before the game started
+ * 
+ */
 class Menu{
     private:
         sf::Texture textPlayBig;

@@ -34,7 +34,7 @@ class Game{
             filetoBlocs();
 
             //Placer player au coordonnée de son départ (0,0 par défaut)
-            printf("x:%i y:%i", map.getDX(), map.getDY());
+            //printf("x:%i y:%i", map.getDX(), map.getDY());
             Bloc blocDebut = blocs[map.getNbColonne() * (map.getDX()/50) + (map.getDY()/50)];
             player = Player(map.getDX(),map.getDY(),map.getDX()/50,map.getDY()/50, blocDebut);
             hasMove = true;
@@ -144,8 +144,10 @@ class Game{
                 // else printf("%i ", player.getposTabY()*map.getNbColonne()+player.getposTabX());
                 if(collision(blocs[i].getSprite(), player.getSprite()) && !blocs[i].getIsWall() && !blocs[i].getIsClosed()){
                     // printf("collision\n");
+                    if(blocs[i].getIsWall()){
+                        player.changeGo(false);
+                    }
                     player.setBloc(blocs[i]);
-
                     if (blocs[i].getIsButton() && hasMove) {
                         for(int j = 0; j < nbBlocs; j++){
                             if (blocs[j].getChar() == '=') {
@@ -154,10 +156,10 @@ class Game{
                                     blocs[j].changeClosed();
                                     printf("porte trouvée");
                                 }
-                                else {
-                                    blocs[j].changeTexture('#');
-                                    blocs[j].changeClosed();
-                                }
+                                // else {
+                                //     blocs[j].changeTexture('#');
+                                //     blocs[j].changeClosed();
+                                // }
                             }
                         }
                         //printf("hasMove = false\n");
@@ -176,9 +178,9 @@ class Game{
                     return;
                 }
             }
-            printf("pas sur un bloc\n");
-            player.replacePlayer();
+            //printf("pas sur un bloc\n");
             player.changeGo(false);
+            player.replacePlayer();
         }
 
         /**

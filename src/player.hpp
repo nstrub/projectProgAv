@@ -120,11 +120,11 @@ class Player{
 //            infoPlayerMove();
             int ancienX = posX;
             int ancienY = posY;
+            texture.loadFromFile("ressources/avGauche.png");
             if(canGo){
                 posX -= MOVEMENT;
                 posTabX--;
                 sprite.setPosition(posX, posY);
-                texture.loadFromFile("ressources/avGauche.png");
             }
             else{
                 posX = ancienX;
@@ -138,12 +138,11 @@ class Player{
 //            infoPlayerMove();
             int ancienX = posX;
             int ancienY = posY;
+            texture.loadFromFile("ressources/avDroite.png");
             if(canGo){
                 posX += MOVEMENT;
                 posTabX++;
-                sprite.setPosition(posX, posY);
-                texture.loadFromFile("ressources/avDroite.png");
-
+                sprite.setPosition(posX, posY);    
             }
             else{
                 posX = ancienX;
@@ -161,11 +160,12 @@ class Player{
 //            infoPlayerMove();
             int ancienX = posX;
             int ancienY = posY;
+            texture.loadFromFile("ressources/avBas.png");
+
             if(canGo){
                 posY = posY + MOVEMENT;
                 posTabY++;
                 sprite.setPosition(posX, posY);
-                texture.loadFromFile("ressources/avBas.png");
             }
             else{
                 posX = ancienX;
@@ -178,11 +178,12 @@ class Player{
 //            infoPlayerMove();
             int ancienX = posX;
             int ancienY = posY;
+            texture.loadFromFile("ressources/avHaut.png");
+
             if(canGo){
                 posY = posY - MOVEMENT;
                 posTabY--;
                 sprite.setPosition(posX, posY);
-                texture.loadFromFile("ressources/avHaut.png");
             }
             else{
                 posX = ancienX;
@@ -215,6 +216,8 @@ class Player{
          * 
          */
         void replacePlayer(){
+            posX = blocOn.getSprite().getPosition().x;
+            posY = blocOn.getSprite().getPosition().y;
             sprite.setPosition(blocOn.getSprite().getPosition().x,
                                blocOn.getSprite().getPosition().y);
         }
