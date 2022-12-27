@@ -160,17 +160,17 @@ class Game{
                                 }
                             }
                         }
-                        printf("hasMove = false\n");
+                        //printf("hasMove = false\n");
                         hasMove = false;
                     }
 
                     if (blocs[player.getposTabY()*map.getNbColonne()+player.getposTabX()].getChar() != '@') {
                         hasMove = true;
-                        printf("hasMove = true\n");
+                        //printf("hasMove = true\n");
                     }
 
                     if (blocs[i].getIsExit()) {
-                        printf("Bravo !\nFin");
+                        printf("Bravo !\n");
                         exit(0);
                     }
                     return;
