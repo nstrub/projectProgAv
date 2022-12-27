@@ -28,7 +28,7 @@ class Game{
          * 
          */
         Game(int size){
-            map = Map("ressources/niveau1.map");
+            map = Map("ressources/niveau2.map");
             sizeTab = nbBlocs = map.size();
             tab = map.getMap();    //Récup les données de map
             filetoBlocs();
