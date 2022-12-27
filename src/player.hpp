@@ -49,7 +49,7 @@ class Player{
             posTabX = postabX;
             posTabY = postabY;
             sprite.setPosition(coordX,coordY);
-            texture.loadFromFile("ressources/perso.png");
+            texture.loadFromFile("ressources/stance.png");
             setBloc(blocGived);
         }
 
@@ -124,6 +124,7 @@ class Player{
                 posX -= MOVEMENT;
                 posTabX--;
                 sprite.setPosition(posX, posY);
+                texture.loadFromFile("ressources/avGauche.png");
             }
             else{
                 posX = ancienX;
@@ -141,6 +142,8 @@ class Player{
                 posX += MOVEMENT;
                 posTabX++;
                 sprite.setPosition(posX, posY);
+                texture.loadFromFile("ressources/avDroite.png");
+
             }
             else{
                 posX = ancienX;
@@ -162,6 +165,7 @@ class Player{
                 posY = posY + MOVEMENT;
                 posTabY++;
                 sprite.setPosition(posX, posY);
+                texture.loadFromFile("ressources/avBas.png");
             }
             else{
                 posX = ancienX;
@@ -178,6 +182,7 @@ class Player{
                 posY = posY - MOVEMENT;
                 posTabY--;
                 sprite.setPosition(posX, posY);
+                texture.loadFromFile("ressources/avHaut.png");
             }
             else{
                 posX = ancienX;
