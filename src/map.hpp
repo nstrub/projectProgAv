@@ -131,7 +131,7 @@ class Map{
                 int caseActuelle = 0;
 
                 for (int i = 0; i < nbLigne * nbColonne + nbLigne - 1; i++) {
-                    printf("%c",buffer[i]);
+                    //printf("%c",buffer[i]);
                     // Caractères par défaut
                     map[caseActuelle] = buffer[i];
 

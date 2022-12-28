@@ -7,6 +7,7 @@
 
 #include "player.hpp"
 #include "map.hpp"
+#include "choixNiveaux.hpp"
 
 /**
  * @brief Class that manage the game
@@ -21,14 +22,35 @@ class Game{
         Bloc *blocs;
         int nbBlocs;
         bool hasMove;
+        int choixLvl;
+        int isContrsuct = 0;
 
     public:
         /**
          * @brief Construct new game Object
          * 
          */
-        Game(int size){
-            map = Map("ressources/niveau2.map");
+        Game(){
+
+        }
+
+        Game(int size, int numNiveau){
+            choixLvl = numNiveau;
+            switch (choixLvl)
+            {
+            case 1:
+                map = Map("ressources/niveau1.map");
+                isContrsuct = 1;
+                break;
+            case 2:
+                map = Map("ressources/niveau2.map");
+                isContrsuct = 1;
+                break;
+            case 3:
+                map = Map("ressources/niveau3.map");
+                isContrsuct = 1;
+                break;                
+            }
             sizeTab = nbBlocs = map.size();
             tab = map.getMap();    //Récup les données de map
             filetoBlocs();
@@ -39,6 +61,8 @@ class Game{
             player = Player(map.getDX(),map.getDY(),map.getDX()/50,map.getDY()/50, blocDebut);
             hasMove = true;
         }
+
+        int getIsContruct(){return isContrsuct;}
 
         Bloc getBloc(int n){
             return blocs[n];
@@ -154,7 +178,7 @@ class Game{
                                 if (blocs[j].getIsClosed()) {
                                     blocs[j].changeTexture('0');
                                     blocs[j].changeClosed();
-                                    printf("porte trouvée");
+                                    //printf("porte trouvée");
                                 }
                                 // else {
                                 //     blocs[j].changeTexture('#');
@@ -172,7 +196,7 @@ class Game{
                     }
 
                     if (blocs[i].getIsExit()) {
-                        printf("Bravo !\n");
+                        //printf("Bravo !\n");
                         exit(0);
                     }
                     return;
