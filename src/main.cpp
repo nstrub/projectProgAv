@@ -19,20 +19,17 @@ int main() {
     Game game = Game(); 
 
     while (app.isOpen()) {
-        while(menu.getMenuUpdate() == 1){
+        while(menu.getMenuUpdate() == 1){           //Ouverture du premier menu
             menu.handleMoves(app);
             menu.draw(app);
         }
         if(game.getIsContruct() == 0){
-            while(choixLvl.getMenuUpdate() == 1){
+            while(choixLvl.getMenuUpdate() == 1){   //Ouverture du menu de selection de niveau
                 choixLvl.handleMoves(app);
                 choixLvl.draw(app);
             }
-            game = Game(5, choixLvl.getChoix());
+            game = Game(5, choixLvl.getChoix());    //Creation du jeu en fonction du niveau choisi
         }
-
-
-
 
         game.handleMoves(app);
         game.draw(app);

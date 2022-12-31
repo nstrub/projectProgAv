@@ -76,6 +76,12 @@ class Bloc{
             return sprite.getGlobalBounds().height;
         }
 
+        /**
+         * @brief place the bloc in the right position
+         * 
+         * @param x 
+         * @param y 
+         */
         void placer(int x, int y){
             sprite.setPosition(x,y);
         }
@@ -112,6 +118,11 @@ class Bloc{
             isClosed = !isClosed;
         }
 
+        /**
+         * @brief Change the texture of the blocs from its char on the .map
+         * 
+         * @param c 
+         */
         void changeTexture(char c) {
             std::string debut = "ressources/";
             std::string fin = ".png";
@@ -119,6 +130,11 @@ class Bloc{
             texture.loadFromFile(link);
         }
 
+        /**
+         * @brief Draw the bloc on the screen
+         * 
+         * @param app 
+         */
         void draw(sf::RenderWindow &app){
             sprite.setTexture(texture);
             app.draw(sprite);

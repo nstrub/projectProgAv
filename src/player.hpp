@@ -222,17 +222,6 @@ class Player{
                                blocOn.getSprite().getPosition().y);
         }
 
-        // void infoPlayerMove(){
-        //     if(blocOn.getisFree()){
-        //         canGo = true;
-        //     }
-        //     else{
-        //         canGo = false;
-        //         printf("player met cango faux\n");
-        //     }
-        // }
-
-        //ATTENTION : BUG LORSQUE S ET D ou autre appuyés en même temps
         /**
          * @brief Handle the moves of the player
          * 
@@ -264,7 +253,6 @@ class Player{
                     moveDown();
                 }
             }
-            //printf("CanGo : %d %d %d\n",canGo, posX, posY);
         }
 };
 

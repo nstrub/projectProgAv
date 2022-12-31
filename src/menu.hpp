@@ -52,11 +52,21 @@ class Menu{
             choix = 0;
             menuUpdate = 1;
         }
-
+        
+        /**
+         * @brief Return the value that check if the player as chosen the play button
+         * 
+         * @return int 
+         */
         int getMenuUpdate(){
             return menuUpdate;
         }
 
+        /**
+         * @brief draw the menu to the screen
+         * 
+         * @param app 
+         */
         void draw(sf::RenderWindow &app){
             app.clear();
             spritePlayBig.setTexture(textPlayBig);
@@ -89,6 +99,11 @@ class Menu{
             app.display();
         }
 
+        /**
+         * @brief Handle the moves of the player such as his keyboard
+         * 
+         * @param app 
+         */
         void handleMoves(sf::RenderWindow &app){
             sf::Event event;
             while(app.pollEvent(event)){

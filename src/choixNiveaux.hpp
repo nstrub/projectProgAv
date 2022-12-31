@@ -39,14 +39,29 @@ class ChoixNiveaux{
             menuUpdate = 1;
         }
 
+        /**
+         * @brief Return the value that check if the player as chosen a level to play
+         * 
+         * @return int 
+         */
         int getMenuUpdate(){
             return menuUpdate;
         }
 
+        /**
+         * @brief Return the number of the choosen level
+         * 
+         * @return int 
+         */
         int getChoix(){
             return choix;
         }
 
+        /**
+         * @brief draw the second menu to the screen
+         * 
+         * @param app 
+         */
         void draw(sf::RenderWindow &app){
             app.clear();
             spriteSel1.setTexture(textSel1);

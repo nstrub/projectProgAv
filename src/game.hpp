@@ -27,13 +27,19 @@ class Game{
 
     public:
         /**
-         * @brief Construct new game Object
+         * @brief Construct an empty Game Object
          * 
          */
         Game(){
 
         }
 
+        /**
+         * @brief Construct a new Game Object
+         * 
+         * @param size 
+         * @param numNiveau 
+         */
         Game(int size, int numNiveau){
             choixLvl = numNiveau;
             switch (choixLvl)
@@ -62,8 +68,19 @@ class Game{
             hasMove = true;
         }
 
+        /**
+         * @brief Get the Is Contruct number (1 if Game(int size, int numNiveau) is called )
+         * 
+         * @return int 
+         */
         int getIsContruct(){return isContrsuct;}
 
+        /**
+         * @brief Return a certain bloc from blocs[]
+         * 
+         * @param n 
+         * @return Bloc 
+         */
         Bloc getBloc(int n){
             return blocs[n];
         }
@@ -121,48 +138,12 @@ class Game{
             return sprite1.getGlobalBounds().intersects(sprite2.getGlobalBounds());
         }
 
+
+        /**
+         * @brief Send the bloc that is in colision with the player and reacts in fonction of it
+         * 
+         */
         void setBlocforPlayer(){
-            // printf("%i", player.getposTabY()*map.getNbColonne()+player.getposTabX());
-            // Bloc tmp = blocs[player.getposTabX()*map.getNbColonne()+player.getposTabY()];
-            // if(collision(tmp.getSprite(), player.getSprite())){
-            //     printf(" collision");
-            //     if (tmp.getIsWall() || tmp.getIsClosed()) {
-            //         printf(" Mur ou Porte fermée\n");
-            //         player.replacePlayer();
-            //         player.changeGo(false);
-            //         return;
-            //     }
-
-            //     printf(" Libre\n");
-                
-            //     player.setBloc(tmp);
-
-            //     if (tmp.getIsButton() && hasMove) {
-            //         for(int j = 0; j < nbBlocs; j++){
-            //             if (blocs[j].getChar() == '=') {
-            //                 if (blocs[j].getIsClosed()) blocs[j].changeTexture('0');
-            //                 else blocs[j].changeTexture('#');
-            //             }
-            //         }
-            //         printf("hasMove = false\n");
-            //         hasMove = false;
-            //     }
-            //     else {
-            //         hasMove = true;
-            //         // printf("hasMove = true\n");
-            //     }
-
-            //     if (tmp.getIsExit()) {
-            //         printf("Bravo !\nFin");
-            //         exit(0);
-            //     }
-            //     return;
-            // }
-            // else {
-            //     player.replacePlayer();
-            //     player.changeGo(false);
-            // }
-
             for(int i = 0; i < nbBlocs; i++){
                 // if (i == player.getposTabY()*map.getNbColonne()+player.getposTabX()) printf("sur la case : %i", i);
                 // else printf("%i ", player.getposTabY()*map.getNbColonne()+player.getposTabX());
